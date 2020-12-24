@@ -14,7 +14,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, ref } from 'vue'
+import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue'
+import useClickOutside from '@/hooks/useClickOutside.ts'
 
 export default defineComponent({
   name: 'Dropdown',
@@ -30,25 +31,11 @@ export default defineComponent({
     const toggleOpen = () => {
       isOpen.value = !isOpen.value
     }
-    /**
-     * 需求：在外部点击的时候让dropdown隐藏
-     * 思路：
-     *      1. 在mounted的时候天津click事件，在unmounted的时候将事件删除
-     *      2. 拿到Dropdown的Dom元素，从而判断点击内容是否被这个元素包含
-     */
-    const handler = (e: MouseEvent) => {
-      if (dropdownRef.value) {
-        // contains API文档：https://developer.mozilla.org/en-US/docs/Web/API/Node/contains
-        if (!(dropdownRef.value.contains(e.target as HTMLElement)) && isOpen.value) {
-          isOpen.value = false
-        }
+    const isClickOutside = useClickOutside(dropdownRef)
+    watch(isClickOutside, () => {
+      if (isOpen.value && isClickOutside.value) {
+        isOpen.value = false
       }
-    }
-    onMounted(() => {
-      document.addEventListener('click', handler)
-    })
-    onUnmounted(() => {
-      document.removeEventListener('click', handler)
     })
     return {
       isOpen,
