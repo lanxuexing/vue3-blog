@@ -1,34 +1,19 @@
 <template>
   <div class="container">
     <global-header :user="currentUser"></global-header>
-    <!-- 表单：https://getbootstrap.com/docs/5.0/forms/overview/ -->
-    <validate-form @form-submit="onFormSubmit">
-      <div class="mb-3">
-        <label class="form-label">邮箱地址</label>
-        <validate-input
-          v-model="emailValue"
-          :rules="emailRules"
-          type="text"
-          placeholder="请输入邮箱地址"
-        >
-        </validate-input>
-      </div>
-      {{ emailValue }}
-      <div class="mb-3">
-        <label class="form-label">密码</label>
-        <validate-input
-          v-model="passwordValue"
-          :rules="passwordRules"
-          type="password"
-          placeholder="请输入密码"
-        >
-        </validate-input>
-      </div>
-      <template v-slot:submit>
-        <span class="btn btn-danger">Submit</span>
-      </template>
-    </validate-form>
+    <router-view></router-view>
     <!-- <column-list :list="list"></column-list> -->
+    <footer class="text-center py-4 text-secondary bg-light mt-6">
+      <small>
+        <ul class="list-inline mb-0">
+          <li class="list-inline-item">&copy;2021 博客专栏</li>
+          <li class="list-inline-item">课程</li>
+          <li class="list-inline-item">文档</li>
+          <li class="list-inline-item">联系</li>
+          <li class="list-inline-item">更多</li>
+        </ul>
+      </small>
+    </footer>
   </div>
 </template>
 
@@ -38,11 +23,9 @@
  * @link https://getbootstrap.com/docs/5.0/getting-started/introduction/
  */
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 // import ColumnList, { ColumnProps } from '@/components/ColumnList.vue'
 import GlobalHeader, { UserProps } from '@/components/GlobalHeader.vue'
-import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
-import ValidateForm from '@/components/ValidateForm.vue'
 // const testData: ColumnProps[] = [
 //   {
 //     id: 1,
@@ -79,32 +62,12 @@ export default defineComponent({
   name: 'App',
   components: {
     // ColumnList,
-    GlobalHeader,
-    ValidateInput,
-    ValidateForm
+    GlobalHeader
   },
   setup () {
-    const emailValue = ref('')
-    const passwordValue = ref('')
-    // 表单验证规则
-    const emailRules: RulesProp = [
-      { type: 'required', message: '电子邮件地址不能为空' },
-      { type: 'email', message: '请输入正确的电子邮件格式' }
-    ]
-    const passwordRules: RulesProp = [
-      { type: 'required', message: '密码不能为空' }
-    ]
-    const onFormSubmit = (e: boolean) => {
-      console.log('表单提交: ', e)
-    }
     return {
       // list: testData,
-      currentUser,
-      emailRules,
-      emailValue,
-      passwordRules,
-      passwordValue,
-      onFormSubmit
+      currentUser
     }
   }
 })
