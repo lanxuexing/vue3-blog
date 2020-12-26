@@ -23,7 +23,6 @@ export default defineComponent({
     const submitForm = () => {
       ctx.emit('form-submit', true)
     }
-    // 
     /**
      * mitt库的handler回调函数TS类型报错
      *  1. 引入声明：https://github.com/developit/mitt/issues/119#issuecomment-722807694
