@@ -11,7 +11,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onUnmounted } from 'vue'
+import mitt, { Emitter, Handler } from 'mitt'
+
+export const emitter: Emitter = mitt()
+
 export default defineComponent({
   name: 'ValidateForm',
   emits: ['form-submit'],
@@ -19,6 +23,19 @@ export default defineComponent({
     const submitForm = () => {
       ctx.emit('form-submit', true)
     }
+    // 
+    /**
+     * mitt库的handler回调函数TS类型报错
+     *  1. 引入声明：https://github.com/developit/mitt/issues/119#issuecomment-722807694
+     *  2. 回调函数：https://github.com/developit/mitt/issues/112#issuecomment-740517823
+     */
+    const callback: Handler = (event: string) => {
+      console.log('回调信息: ', event)
+    }
+    emitter.on('from-item-created', callback)
+    onUnmounted(() => {
+      emitter.off('from-item-created', callback)
+    })
     return {
       submitForm
     }

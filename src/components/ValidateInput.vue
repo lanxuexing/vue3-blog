@@ -16,7 +16,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive } from 'vue'
+import { defineComponent, onMounted, PropType, reactive } from 'vue'
+import { emitter } from '@/components/ValidateForm.vue'
 
 const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
@@ -66,6 +67,9 @@ export default defineComponent({
       inputRef.val = targetValue
       ctx.emit('update:modelValue', targetValue)
     }
+    onMounted(() => {
+      emitter.emit('from-item-created', inputRef.val)
+    })
     return {
       inputRef,
       validateInput,
