@@ -2,7 +2,7 @@
   <div class="container">
     <global-header :user="currentUser"></global-header>
     <router-view></router-view>
-    <footer class="text-center py-4 text-secondary bg-light mt-6">
+    <footer class="text-center py-4 text-secondary bg-light mt-auto">
       <small>
         <ul class="list-inline mb-0">
           <li class="list-inline-item">&copy;2021 博客专栏</li>
