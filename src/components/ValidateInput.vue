@@ -2,7 +2,7 @@
   <!-- 表单验证：https://getbootstrap.com/docs/5.0/forms/validation/#server-side -->
   <div class="validate-input-container pb-3">
     <input
-      type="text"
+      v-bind="$attrs"
       class="form-control"
       :class="{ 'is-invalid': inputRef.error }"
       :value="inputRef.val"
@@ -33,6 +33,7 @@ export default defineComponent({
     rules: Array as PropType<RulesProp>,
     modelValue: String
   },
+  inheritAttrs: false, // https://vue3js.cn/docs/zh/api/options-misc.html#inheritattrs
   setup (props, ctx) {
     const inputRef = reactive({
       val: props.modelValue || '',
