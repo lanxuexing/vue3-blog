@@ -1,19 +1,11 @@
 <template>
   <div class="container">
     <global-header :user="currentUser"></global-header>
+    <!-- 表单：https://getbootstrap.com/docs/5.0/forms/overview/ -->
     <form action="">
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">邮箱地址</label>
-        <input
-          type="email"
-          class="form-control"
-          id="exampleInputEmail1"
-          v-model="emailRef.val"
-          @blur="validateEmail"
-        />
-        <div class="form-text" v-if="emailRef.error">
-          {{ emailRef.message }}
-        </div>
+        <validate-input :rules="emailRules"></validate-input>
       </div>
       <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">密码</label>
@@ -33,6 +25,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { defineComponent, reactive } from 'vue'
 // import ColumnList, { ColumnProps } from '@/components/ColumnList.vue'
 import GlobalHeader, { UserProps } from '@/components/GlobalHeader.vue'
+import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
 // const testData: ColumnProps[] = [
 //   {
 //     id: 1,
@@ -65,34 +58,23 @@ const currentUser: UserProps = {
   id: 1
 }
 
-const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-
 export default defineComponent({
   name: 'App',
   components: {
     // ColumnList,
-    GlobalHeader
+    GlobalHeader,
+    ValidateInput
   },
   setup () {
-    const emailRef = reactive({
-      val: '',
-      error: false,
-      message: ''
-    })
-    const validateEmail = () => {
-      if (emailRef.val.trim() === '') {
-        emailRef.error = true
-        emailRef.message = '邮箱不能为空'
-      } else if (!emailReg.test(emailRef.val)) {
-        emailRef.error = true
-        emailRef.message = '邮箱格式不符合要求'
-      }
-    }
+    // 表单验证规则
+    const emailRules: RulesProp = [
+      { type: 'required', message: '电子邮件地址不能为空' },
+      { type: 'email', message: '请输入正确的电子邮件格式' }
+    ]
     return {
       // list: testData,
       currentUser,
-      emailRef,
-      validateEmail
+      emailRules
     }
   }
 })
