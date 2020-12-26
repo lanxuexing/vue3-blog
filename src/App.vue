@@ -5,8 +5,9 @@
     <form action="">
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">邮箱地址</label>
-        <validate-input :rules="emailRules"></validate-input>
+        <validate-input v-model="emailValue" :rules="emailRules"></validate-input>
       </div>
+      {{ emailValue }}
       <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">密码</label>
         <input type="email" class="form-control" id="exampleInputPassword1" />
@@ -22,7 +23,7 @@
  * @link https://getbootstrap.com/docs/5.0/getting-started/introduction/
  */
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, ref } from 'vue'
 // import ColumnList, { ColumnProps } from '@/components/ColumnList.vue'
 import GlobalHeader, { UserProps } from '@/components/GlobalHeader.vue'
 import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
@@ -66,6 +67,7 @@ export default defineComponent({
     ValidateInput
   },
   setup () {
+    const emailValue = ref('')
     // 表单验证规则
     const emailRules: RulesProp = [
       { type: 'required', message: '电子邮件地址不能为空' },
@@ -74,7 +76,8 @@ export default defineComponent({
     return {
       // list: testData,
       currentUser,
-      emailRules
+      emailRules,
+      emailValue
     }
   }
 })
