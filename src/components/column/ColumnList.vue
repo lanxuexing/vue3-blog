@@ -8,7 +8,10 @@
           <img :src="column.avatar" class="rounded-circle border border-light w-25 my-3" alt="column.title" />
           <h5 class="card-title">{{ column.title }}</h5>
           <p class="card-text text-start">{{ column.description }}</p>
-          <router-link :to="{ name: 'detail', params: { id: column.id } }" class="btn btn-outline-primary">进入专栏</router-link>
+          <!-- 第一种写法 -->
+          <!-- <router-link :to="{ name: 'detail', params: { id: column.id } }" class="btn btn-outline-primary">进入专栏</router-link> -->
+          <!-- 第二种写法 -->
+          <router-link :to="`/detail/${column.id}`" class="btn btn-outline-primary">进入专栏</router-link>
         </div>
       </div>
     </div>
