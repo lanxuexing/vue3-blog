@@ -23,7 +23,7 @@
           >
           </validate-input>
         </div>
-        <!-- 插槽的写法： [1] v-slot:soltName [2] #soltName -->
+        <!-- 插槽的写法： [1] v-slot:soltName [2] #slotName -->
         <template #submit>
           <button type="submit" class="btn btn-primary btn-block btn-large">登录</button>
         </template>
@@ -35,9 +35,9 @@
 import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import ValidateInput, { RulesProp } from '@/components/form/ValidateInput.vue'
+import ValidateInput from '@/components/form/ValidateInput.vue'
 import ValidateForm from '@/components/form/ValidateForm.vue'
-import { GlobalDataProps } from '@/model/DataProps'
+import { GlobalDataProps, RulesProp } from '@/model/DataProps'
 
 export default defineComponent({
   name: 'Login',

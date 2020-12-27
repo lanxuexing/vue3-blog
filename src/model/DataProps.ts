@@ -2,6 +2,7 @@ export interface UserProps {
   isLogin: boolean;
   name?: string;
   id?: number;
+  columnId?: number;
 }
 
 export interface ColumnProps {
@@ -25,3 +26,12 @@ export interface GlobalDataProps {
   posts: PostProps[];
   user: UserProps;
 }
+
+interface RuleProp {
+  type: 'required' | 'email';
+  message: string;
+}
+
+export type RulesProp = RuleProp[]
+
+export type TagType = 'input' | 'textarea';

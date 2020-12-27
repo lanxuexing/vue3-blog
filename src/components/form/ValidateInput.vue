@@ -2,6 +2,16 @@
   <!-- 表单验证：https://getbootstrap.com/docs/5.0/forms/validation/#server-side -->
   <div class="validate-input-container pb-3">
     <input
+      v-if="tag !== 'textarea'"
+      v-bind="$attrs"
+      class="form-control"
+      :class="{ 'is-invalid': inputRef.error }"
+      :value="inputRef.val"
+      @input="updateValue"
+      @blur="validateInput"
+    />
+    <textarea
+      v-else
       v-bind="$attrs"
       class="form-control"
       :class="{ 'is-invalid': inputRef.error }"
@@ -18,21 +28,19 @@
 <script lang="ts">
 import { defineComponent, onMounted, PropType, reactive } from 'vue'
 import { emitter } from '@/components/form/ValidateForm.vue'
+import { RulesProp, TagType } from '@/model/DataProps'
 
 const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-
-interface RuleProp {
-  type: 'required' | 'email';
-  message: string;
-}
-
-export type RulesProp = RuleProp[]
 
 export default defineComponent({
   name: 'ValidateInput',
   props: {
     rules: Array as PropType<RulesProp>,
-    modelValue: String
+    modelValue: String,
+    tag: {
+      type: String as PropType<TagType>,
+      default: 'input'
+    }
   },
   inheritAttrs: false, // https://vue3js.cn/docs/zh/api/options-misc.html#inheritattrs
   setup (props, ctx) {

@@ -32,7 +32,6 @@ export default defineComponent({
     // 直接从store的getters中获取对应的数据
     const column = computed(() => store.getters.getColumnById(currentId))
     const list = computed(() => store.getters.getPostsByCid(currentId))
-    console.log(column)
     return {
       route,
       column,
