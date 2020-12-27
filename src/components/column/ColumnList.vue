@@ -11,7 +11,7 @@
           <!-- 第一种写法 -->
           <!-- <router-link :to="{ name: 'detail', params: { id: column.id } }" class="btn btn-outline-primary">进入专栏</router-link> -->
           <!-- 第二种写法 -->
-          <router-link :to="`/detail/${column.id}`" class="btn btn-outline-primary">进入专栏</router-link>
+          <router-link :to="`/detail/${column._id}`" class="btn btn-outline-primary">进入专栏</router-link>
         </div>
       </div>
     </div>

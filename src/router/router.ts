@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
 import ColumnDetail from '@/components/column/ColumnDetail.vue'
+import PostDetail from '@/components/column/PostDetail.vue'
 import CreatePost from '@/views/CreatePost.vue'
 import store from '@/vuex/store/store'
 
@@ -34,6 +35,11 @@ const router = createRouter({
       meta: {
         requiredLogin: true
       }
+    },
+    {
+      path: '/posts/:id',
+      name: 'posts',
+      component: PostDetail
     }
   ]
 })

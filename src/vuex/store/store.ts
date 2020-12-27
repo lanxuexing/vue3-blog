@@ -14,6 +14,16 @@ const store = createStore<GlobalDataProps>({
       axios.get('/api/columns').then(resp => {
         ctx.commit('fetchColumns', resp.data)
       })
+    },
+    featchColumn ({ commit }, cid) {
+      axios.get(`/api/columns/${cid}`).then(resp => {
+        commit('featchColumn', resp.data)
+      })
+    },
+    featchPosts ({ commit }, cid) {
+      axios.get(`/api/columns/${cid}/posts`).then(resp => {
+        commit('featchPosts', resp.data)
+      })
     }
   },
   mutations: {
@@ -25,14 +35,17 @@ const store = createStore<GlobalDataProps>({
     },
     fetchColumns (state, rawData) {
       state.columns = rawData.data.list
+    },
+    featchColumn (state, rawData) {
+      state.columns = [rawData.data]
+    },
+    featchPosts (state, rawData) {
+      state.posts = rawData.data.list
     }
   },
   getters: {
-    biggerColumnsLen (state) {
-      return state.columns.filter(c => c._id.length > 20).length
-    },
     getColumnById: (state) => (id: string) => state.columns.find(c => c._id === id),
-    getPostsByCid: (state) => (cid: number) => state.posts.filter(post => post.columnId === cid)
+    getPostsByCid: (state) => (cid: string) => state.posts.filter(post => post.column === cid)
   }
 })
 

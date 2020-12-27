@@ -19,12 +19,13 @@ export interface ColumnProps {
 }
 
 export interface PostProps {
-  id: number;
+  _id: string;
   title: string;
-  content: string;
-  image?: string;
+  excerpt?: string;
+  content?: string;
+  image?: ImageProps;
   createdAt: string;
-  columnId: number;
+  column: string;
 }
 
 export interface GlobalDataProps {
