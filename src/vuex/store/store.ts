@@ -12,7 +12,6 @@ const store = createStore<GlobalDataProps>({
   actions: {
     fetchColumns (ctx) {
       axios.get('/api/columns').then(resp => {
-        console.log('🎄', resp)
         ctx.commit('fetchColumns', resp.data)
       })
     }
