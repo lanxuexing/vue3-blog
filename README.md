@@ -42,3 +42,26 @@ h(
     { modelValue: foo, 'onUpdate:modelValue': value => (foo = value) }
 )
 ```
+
+
+### 箭头函数
+
+```js
+() => ...
+// 等价于
+(function () {
+    return ...
+}).bind(this)
+
+// 箭头函数在不写{} 的情况下，可以省略return关键字，而默认return接下来的东西
+
+() => () => ...
+// 等价于
+() => {return () => {return ...}}
+// 也等价于
+function () {
+    retunrn function() {
+        return ...
+    }
+}
+```

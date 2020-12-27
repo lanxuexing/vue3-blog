@@ -14,7 +14,7 @@
     <h4 class="font-weight-bold text-center">发现精彩</h4>
     <column-list :list="list"></column-list>
     <button class="d-flex justify-content-center btn btn-outline-primary mt-2 mb-5 mx-auto btn-block w-25">
-      加载更多
+      加载更多{{ biggerLen }}
     </button>
   </div>
 </template>
@@ -32,9 +32,12 @@ export default defineComponent({
   },
   setup () {
     const store = useStore<GlobalDataProps>()
+    // 直接从store的getters中获取对应的数据
     const list = computed(() => store.state.columns)
+    const biggerLen = computed(() => store.getters.biggerColumnsLen)
     return {
-      list
+      list,
+      biggerLen
     }
   }
 })

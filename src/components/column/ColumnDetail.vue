@@ -16,19 +16,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import PostList from '@/components/column/PostList.vue'
-import { testData, testPosts } from '@/model/MockData'
+import { GlobalDataProps } from '@/model/DataProps'
 
 export default defineComponent({
   components: { PostList },
   name: 'ColumnDetail',
   setup () {
     const route = useRoute()
+    const store = useStore<GlobalDataProps>()
     const currentId = +route.params.id
-    const column = testData.find(c => c.id === currentId)
-    const list = testPosts.filter(post => post.columnId === currentId)
+    // 直接从store的getters中获取对应的数据
+    const column = computed(() => store.getters.getColumnById(currentId))
+    const list = computed(() => store.getters.getPostsByCid(currentId))
     console.log(column)
     return {
       route,
