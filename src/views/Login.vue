@@ -33,8 +33,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
-import ValidateForm from '@/components/ValidateForm.vue'
+import ValidateInput, { RulesProp } from '@/components/form/ValidateInput.vue'
+import ValidateForm from '@/components/form/ValidateForm.vue'
 
 export default defineComponent({
   name: 'Login',
