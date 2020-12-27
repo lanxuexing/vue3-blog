@@ -16,7 +16,11 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      // 路由元数据meta：https://next.router.vuejs.org/guide/advanced/meta.html#route-meta-fields
+      meta: {
+        redirectAlreadyLogin: true
+      }
     },
     {
       path: '/detail/:id',
@@ -26,7 +30,10 @@ const router = createRouter({
     {
       path: '/create',
       name: 'create',
-      component: CreatePost
+      component: CreatePost,
+      meta: {
+        requiredLogin: true
+      }
     }
   ]
 })
@@ -34,8 +41,10 @@ const router = createRouter({
 // 全局前置守卫：https://next.router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
 router.beforeEach((to, from, next) => {
   console.log(to, from, next)
-  if (to.name !== 'login' && !store.state.user.isLogin) {
+  if (to.meta.requiredLogin && !store.state.user.isLogin) {
     next({ name: 'login' })
+  } else if (to.meta.redirectAlreadyLogin && store.state.user.isLogin) {
+    next('/')
   } else {
     next()
   }
