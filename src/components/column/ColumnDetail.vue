@@ -16,10 +16,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
-import PostList, { testPosts } from '@/components/column/PostList.vue'
-import { testData } from '@/views/Home.vue'
+import PostList from '@/components/column/PostList.vue'
+import { testData, testPosts } from '@/model/MockData'
 
 export default defineComponent({
   components: { PostList },

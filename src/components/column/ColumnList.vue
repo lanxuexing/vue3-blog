@@ -20,14 +20,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-
-// 定义组件的数据类型
-export interface ColumnProps {
-  id: number;
-  title: string;
-  avatar?: string;
-  description: string;
-}
+import { ColumnProps } from '@/model/DataProps'
 
 export default defineComponent({
   name: 'ColumnList',

@@ -22,14 +22,10 @@
  * @link https://getbootstrap.com/docs/5.0/getting-started/introduction/
  */
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { defineComponent } from 'vue'
-import GlobalHeader, { UserProps } from '@/components/GlobalHeader.vue'
-
-const currentUser: UserProps = {
-  isLogin: true,
-  name: 'muziyu',
-  id: 1
-}
+import { computed, defineComponent } from 'vue'
+import { useStore } from 'vuex'
+import GlobalHeader from '@/components/GlobalHeader.vue'
+import { GlobalDataProps } from '@/model/DataProps'
 
 export default defineComponent({
   name: 'App',
@@ -37,6 +33,8 @@ export default defineComponent({
     GlobalHeader
   },
   setup () {
+    const store = useStore<GlobalDataProps>()
+    const currentUser = computed(() => store.state.user)
     return {
       currentUser
     }

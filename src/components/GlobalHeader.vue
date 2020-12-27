@@ -32,12 +32,7 @@
 import { defineComponent, PropType } from 'vue'
 import Dropdown from '@/components/dropdown/Dropdown.vue'
 import DropdownItem from '@/components/dropdown/DropdownItem.vue'
-
-export interface UserProps {
-  isLogin: boolean;
-  name?: string;
-  id?: number;
-}
+import { UserProps } from '@/model/DataProps'
 
 export default defineComponent({
   name: 'GloablHeader',
