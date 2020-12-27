@@ -23,7 +23,7 @@
 import { defineComponent } from 'vue'
 import ColumnList, { ColumnProps } from '@/components/column/ColumnList.vue'
 
-const testData: ColumnProps[] = [
+export const testData: ColumnProps[] = [
   {
     id: 1,
     title: 'test1的专栏',

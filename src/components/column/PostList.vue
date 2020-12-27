@@ -7,9 +7,9 @@
         </h4>
         <div class="roe my-3 align-items-center">
           <div v-if="post.image" class="col-4">
-            <img :src="post.image.fitUrl" :alt="post.title" class="rounded-lg w-100" />
+            <img :src="post.image" :alt="post.title" class="rounded-lg w-100" />
           </div>
-          <p :class="{ 'col-8': post.image }" class="text-muted">{{ post.excerpt }}</p>
+          <p :class="{ 'col-8': post.image }" class="text-muted">{{ post.content }}</p>
         </div>
         <span>{{ post.createdAt }}</span>
       </div>
@@ -30,6 +30,32 @@ export interface PostProps {
   columnId: number;
 }
 
+export const testPosts: PostProps[] = [
+  {
+    id: 1,
+    title: '这是我的第一篇文章',
+    content: '"this is a new post you Very often we will need to map routes with the given pattern to the same component. For example we may have a User component which should be rendered for all users but with dif..."',
+    image: 'http://vue-maker.oss-cn-hangzhou.aliyuncs.com/vue-marker/5ee1980819f4ae08ac78d458.png?x-oss-process=image/resize,m_fill,m_pad,w_200,h_110',
+    createdAt: '2020-06-11 10:34:22',
+    columnId: 1
+  },
+  {
+    id: 2,
+    title: '这是我的第二篇文章',
+    content: '"this is a new post you Very often we will need to map routes with the given pattern to the same component. For example we may have a User component which should be rendered for all users but with dif..."',
+    createdAt: '2020-06-11 10:34:22',
+    columnId: 1
+  },
+  {
+    id: 3,
+    title: '这是我的第三篇文章',
+    content: '"this is a new post you Very often we will need to map routes with the given pattern to the same component. For example we may have a User component which should be rendered for all users but with dif..."',
+    image: 'https://vue-maker.oss-cn-hangzhou.aliyuncs.com/vue-marker/5edcc2329f2b4e28352b75eb.jpg?x-oss-process=image/resize,m_fill,m_pad,w_200,h_110',
+    createdAt: '2020-06-11 10:34:22',
+    columnId: 1
+  }
+]
+
 export default defineComponent({
   name: 'PostList',
   props: {
@@ -41,7 +67,7 @@ export default defineComponent({
   setup (props) {
     const posts = computed(() => {
       return props.list.map(post => {
-        generateFitUrl(post.image as ImageProps, 200, 100, ['m_fill'])
+        generateFitUrl(post.image as ImageProps, 200, 110, ['m_fill'])
         return post
       })
     })
