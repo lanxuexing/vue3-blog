@@ -30,8 +30,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import Dropdown from '@/components/Dropdown.vue'
-import DropdownItem from './DropdownItem.vue'
+import Dropdown from '@/components/dropdown/Dropdown.vue'
+import DropdownItem from '@/components/dropdown/DropdownItem.vue'
 
 export interface UserProps {
   isLogin: boolean;
