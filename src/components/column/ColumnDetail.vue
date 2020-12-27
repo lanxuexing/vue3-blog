@@ -28,7 +28,7 @@ export default defineComponent({
   setup () {
     const route = useRoute()
     const store = useStore<GlobalDataProps>()
-    const currentId = +route.params.id
+    const currentId = route.params.id
     // 直接从store的getters中获取对应的数据
     const column = computed(() => store.getters.getColumnById(currentId))
     const list = computed(() => store.getters.getPostsByCid(currentId))

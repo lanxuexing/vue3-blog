@@ -5,11 +5,17 @@ export interface UserProps {
   columnId?: number;
 }
 
+interface ImageProps {
+  _id?: string;
+  url?: string;
+}
+
 export interface ColumnProps {
-  id: number;
+  _id: string;
   title: string;
-  avatar?: string;
+  avatar?: ImageProps;
   description: string;
+  createdAt?: string;
 }
 
 export interface PostProps {

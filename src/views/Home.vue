@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import ColumnList from '@/components/column/ColumnList.vue'
 import { GlobalDataProps } from '@/model/DataProps'
@@ -35,6 +35,9 @@ export default defineComponent({
     // 直接从store的getters中获取对应的数据
     const list = computed(() => store.state.columns)
     const biggerLen = computed(() => store.getters.biggerColumnsLen)
+    onMounted(() => {
+      store.dispatch('fetchColumns')
+    })
     return {
       list,
       biggerLen
