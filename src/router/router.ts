@@ -40,7 +40,6 @@ const router = createRouter({
 
 // 全局前置守卫：https://next.router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
 router.beforeEach((to, from, next) => {
-  console.log(to, from, next)
   if (to.meta.requiredLogin && !store.state.user.isLogin) {
     next({ name: 'login' })
   } else if (to.meta.redirectAlreadyLogin && store.state.user.isLogin) {
