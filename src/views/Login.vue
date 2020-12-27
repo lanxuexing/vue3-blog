@@ -10,8 +10,7 @@
             placeholder="请输入邮箱地址"
             v-model="emailValue"
             :rules="emailRules"
-          >
-          </validate-input>
+          />
         </div>
         <div class="mb-3">
           <label class="form-label">密码</label>
@@ -20,8 +19,7 @@
             placeholder="请输入密码"
             v-model="passwordValue"
             :rules="passwordRules"
-          >
-          </validate-input>
+          />
         </div>
         <!-- 插槽的写法： [1] v-slot:soltName [2] #slotName -->
         <template #submit>
