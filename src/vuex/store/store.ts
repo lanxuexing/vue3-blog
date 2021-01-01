@@ -10,20 +10,17 @@ const store = createStore<GlobalDataProps>({
     user: testUser
   },
   actions: {
-    fetchColumns (ctx) {
-      axios.get('/api/columns').then(resp => {
-        ctx.commit('fetchColumns', resp.data)
-      })
+    async fetchColumns ({ commit }) {
+      const { data } = await axios.get('/api/columns')
+      commit('fetchColumns', data)
     },
-    featchColumn ({ commit }, cid) {
-      axios.get(`/api/columns/${cid}`).then(resp => {
-        commit('featchColumn', resp.data)
-      })
+    async featchColumn ({ commit }, cid) {
+      const { data } = await axios.get(`/api/columns/${cid}`)
+      commit('featchColumn', data)
     },
-    featchPosts ({ commit }, cid) {
-      axios.get(`/api/columns/${cid}/posts`).then(resp => {
-        commit('featchPosts', resp.data)
-      })
+    async featchPosts ({ commit }, cid) {
+      const { data } = await axios.get(`/api/columns/${cid}/posts`)
+      commit('featchPosts', data)
     }
   },
   mutations: {
