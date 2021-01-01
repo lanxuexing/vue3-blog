@@ -1,8 +1,14 @@
 export interface UserProps {
   isLogin: boolean;
+  nickName?: string;
   name?: string;
   id?: number;
+  _id?: string;
   columnId?: number;
+  column?: string;
+  email?: string;
+  avatar?: ImageProps;
+  description?: string;
 }
 
 export interface ImageProps {
@@ -21,13 +27,15 @@ export interface ColumnProps {
 }
 
 export interface PostProps {
-  _id: string;
+  _id?: string;
   title: string;
   excerpt?: string;
   content?: string;
-  image?: ImageProps;
-  createdAt: string;
+  image?: string | ImageProps;
+  createdAt?: string;
   column: string;
+  author?: string | UserProps;
+  isHTML?: boolean;
 }
 
 export interface GlobalDataProps {
