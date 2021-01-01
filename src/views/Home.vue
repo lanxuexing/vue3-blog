@@ -1,6 +1,6 @@
 <template>
+  <loading :message="'正在加载...'" v-if="isLoading"></loading>
   <div class="home-page">
-    <span v-if="isLoading">正在加载数据...</span>
     <section class="py-5 text-center container">
       <div class="row py-lg-5">
         <div class="col-lg-6 col-md-8 mx-auto">
@@ -25,11 +25,13 @@ import { defineComponent, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import ColumnList from '@/components/column/ColumnList.vue'
 import { GlobalDataProps } from '@/model/DataProps'
+import Loading from '@/components/Loading.vue'
 
 export default defineComponent({
   name: 'Home',
   components: {
-    ColumnList
+    ColumnList,
+    Loading
   },
   setup () {
     const store = useStore<GlobalDataProps>()
