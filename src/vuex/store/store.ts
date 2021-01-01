@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
-import axios from 'axios'
 import { testData, testPosts, testUser } from '@/model/MockData'
 import { GlobalDataProps } from '@/model/DataProps'
+import { getAndCommit } from '@/utils/helper'
 
 const store = createStore<GlobalDataProps>({
   state: {
@@ -11,16 +11,13 @@ const store = createStore<GlobalDataProps>({
   },
   actions: {
     async fetchColumns ({ commit }) {
-      const { data } = await axios.get('/api/columns')
-      commit('fetchColumns', data)
+      getAndCommit('/api/columns', 'fetchColumns', commit)
     },
     async featchColumn ({ commit }, cid) {
-      const { data } = await axios.get(`/api/columns/${cid}`)
-      commit('featchColumn', data)
+      getAndCommit(`/api/columns/${cid}`, 'featchColumn', commit)
     },
     async featchPosts ({ commit }, cid) {
-      const { data } = await axios.get(`/api/columns/${cid}/posts`)
-      commit('featchPosts', data)
+      getAndCommit(`/api/columns/${cid}/posts`, 'featchPosts', commit)
     }
   },
   mutations: {
