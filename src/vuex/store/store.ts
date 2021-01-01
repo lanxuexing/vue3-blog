@@ -7,7 +7,8 @@ const store = createStore<GlobalDataProps>({
   state: {
     columns: testData,
     posts: testPosts,
-    user: testUser
+    user: testUser,
+    loading: false
   },
   actions: {
     fetchColumns ({ commit }) {
@@ -21,6 +22,9 @@ const store = createStore<GlobalDataProps>({
     }
   },
   mutations: {
+    setLoading (state, status) {
+      state.loading = status
+    },
     login (state) {
       state.user = { ...state.user, isLogin: true, name: 'muziyu' }
     },

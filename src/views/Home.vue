@@ -1,5 +1,6 @@
 <template>
   <div class="home-page">
+    <span v-if="isLoading">正在加载数据...</span>
     <section class="py-5 text-center container">
       <div class="row py-lg-5">
         <div class="col-lg-6 col-md-8 mx-auto">
@@ -34,11 +35,13 @@ export default defineComponent({
     const store = useStore<GlobalDataProps>()
     // 直接从store的getters中获取对应的数据
     const list = computed(() => store.state.columns)
+    const isLoading = computed(() => store.state.loading)
     onMounted(() => {
       store.dispatch('fetchColumns')
     })
     return {
-      list
+      list,
+      isLoading
     }
   }
 })

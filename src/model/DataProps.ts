@@ -32,6 +32,7 @@ export interface GlobalDataProps {
   columns: ColumnProps[];
   posts: PostProps[];
   user: UserProps;
+  loading: boolean;
 }
 
 interface RuleProp {
