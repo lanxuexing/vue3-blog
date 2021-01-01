@@ -20,7 +20,8 @@ import { computed, defineComponent, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import PostList from '@/components/column/PostList.vue'
-import { GlobalDataProps } from '@/model/DataProps'
+import { GlobalDataProps, ColumnProps } from '@/model/DataProps'
+import { addColumnAvatar } from '@/utils/helper'
 
 export default defineComponent({
   components: { PostList },
@@ -30,11 +31,17 @@ export default defineComponent({
     const store = useStore<GlobalDataProps>()
     const currentId = route.params.id
     onMounted(() => {
-      store.dispatch('featchColumn', currentId)
-      store.dispatch('featchPosts', currentId)
+      store.dispatch('fetchColumn', currentId)
+      store.dispatch('fetchPosts', currentId)
     })
     // 直接从store的getters中获取对应的数据
-    const column = computed(() => store.getters.getColumnById(currentId))
+    const column = computed(() => {
+      const selectColumn = store.getters.getColumnById(currentId) as ColumnProps | undefined
+      if (selectColumn) {
+        addColumnAvatar(selectColumn, 100, 100)
+      }
+      return selectColumn
+    })
     const list = computed(() => store.getters.getPostsByCid(currentId))
     return {
       route,

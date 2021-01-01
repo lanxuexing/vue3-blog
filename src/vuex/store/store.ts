@@ -1,24 +1,37 @@
 import { createStore } from 'vuex'
-import { testData, testPosts, testUser } from '@/model/MockData'
+import { testUser } from '@/model/MockData'
 import { GlobalDataProps } from '@/model/DataProps'
-import { getAndCommit } from '@/utils/helper'
+import {
+  asyncAndCommit,
+  objToArr,
+  arrToObj
+} from '@/utils/helper'
 
 const store = createStore<GlobalDataProps>({
   state: {
-    columns: testData,
-    posts: testPosts,
+    token: localStorage.getItem('token') || '',
+    columns: { data: {}, isLoaded: false, total: 0 },
+    posts: { data: {}, loadedColumns: [] },
     user: testUser,
     loading: false
   },
   actions: {
-    fetchColumns ({ commit }) {
-      getAndCommit('/api/columns', 'fetchColumns', commit)
+    fetchColumns ({ commit }, params = {}) {
+      const { currentPage = 1, pageSize = 6 } = params
+      return asyncAndCommit(`/api/columns?currentPage=${currentPage}&pageSize=${pageSize}`, 'fetchColumns', commit)
     },
-    featchColumn ({ commit }, cid) {
-      getAndCommit(`/api/columns/${cid}`, 'featchColumn', commit)
+    fetchColumn ({ state, commit }, cid) {
+      if (!state.columns.data[cid]) {
+        return asyncAndCommit(`/api/columns/${cid}`, 'fetchColumn', commit)
+      }
     },
-    featchPosts ({ commit }, cid) {
-      getAndCommit(`/api/columns/${cid}/posts`, 'featchPosts', commit)
+    fetchPosts ({ state, commit }, cid) {
+      if (!state.posts.loadedColumns.includes(cid)) {
+        return asyncAndCommit(`/api/columns/${cid}/posts`, 'fetchPosts', commit, { method: 'get' }, cid)
+      }
+    },
+    createPost ({ commit }, payload) {
+      return asyncAndCommit('/api/posts', 'createPost', commit, { method: 'post', data: payload })
     }
   },
   mutations: {
@@ -29,21 +42,29 @@ const store = createStore<GlobalDataProps>({
       state.user = { ...state.user, isLogin: true, name: 'muziyu' }
     },
     createPost (state, newPost) {
-      state.posts.push(newPost)
+      state.posts.data[newPost._id] = newPost
     },
     fetchColumns (state, rawData) {
-      state.columns = rawData.data.list
+      const { data } = state.columns
+      const { list, count } = rawData.data
+      state.columns = {
+        data: { ...data, ...arrToObj(list) },
+        total: count,
+        isLoaded: true
+      }
     },
-    featchColumn (state, rawData) {
-      state.columns = [rawData.data]
+    fetchColumn (state, rawData) {
+      state.columns.data[rawData.data._id] = rawData.data
     },
-    featchPosts (state, rawData) {
-      state.posts = rawData.data.list
+    fetchPosts (state, { data: rawData, extraData: columnId }) {
+      state.posts.data = { ...state.posts.data, ...arrToObj(rawData.data.list) }
+      state.posts.loadedColumns.push(columnId)
     }
   },
   getters: {
-    getColumnById: (state) => (id: string) => state.columns.find(c => c._id === id),
-    getPostsByCid: (state) => (cid: string) => state.posts.filter(post => post.column === cid)
+    getColumns: (state) => objToArr(state.columns.data),
+    getColumnById: (state) => (id: string) => state.columns.data[id],
+    getPostsByCid: (state) => (cid: string) => objToArr(state.posts.data).filter(post => post.column === cid)
   }
 })
 

@@ -21,6 +21,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 import { ColumnProps } from '@/model/DataProps'
+import { addColumnAvatar } from '@/utils/helper'
 
 export default defineComponent({
   name: 'ColumnList',
@@ -32,14 +33,8 @@ export default defineComponent({
   },
   setup (props) {
     const columnList = computed(() => {
-      return props.list.map(column => {
-        if (!column.avatar) {
-          column.avatar = {
-            url: require('@/assets/column.jpg')
-          }
-        } else {
-          column.avatar.url = column.avatar.url + '?x-oss-process=image/resize,m_pad,h_100,w_100'
-        }
+      return (props.list || []).map(column => {
+        addColumnAvatar(column, 50, 50)
         return column
       })
     })
