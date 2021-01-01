@@ -10,13 +10,13 @@ const store = createStore<GlobalDataProps>({
     user: testUser
   },
   actions: {
-    async fetchColumns ({ commit }) {
+    fetchColumns ({ commit }) {
       getAndCommit('/api/columns', 'fetchColumns', commit)
     },
-    async featchColumn ({ commit }, cid) {
+    featchColumn ({ commit }, cid) {
       getAndCommit(`/api/columns/${cid}`, 'featchColumn', commit)
     },
-    async featchPosts ({ commit }, cid) {
+    featchPosts ({ commit }, cid) {
       getAndCommit(`/api/columns/${cid}/posts`, 'featchPosts', commit)
     }
   },
