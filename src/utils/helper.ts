@@ -1,11 +1,13 @@
+import { createApp } from 'vue'
 import { Commit } from 'vuex'
 import axios from 'axios'
-export interface ImageProps {
-  _id?: string;
-  url?: string;
-  createdAt?: string;
-  fitUrl?: string;
-}
+import {
+  ImageProps,
+  CheckCondition,
+  ErrorType,
+  MessageType
+} from '@/model/DataProps'
+import Message from '@/components/Message.vue'
 
 export function generateFitUrl (data: ImageProps, width: number, height: number, format = ['m_pad']) {
   if (data && data.url) {
@@ -25,4 +27,35 @@ export function generateFitUrl (data: ImageProps, width: number, height: number,
 export async function getAndCommit (url: string, mutationName: string, commit: Commit) {
   const { data } = await axios.get(url)
   commit(mutationName, data)
+}
+
+export function beforeUploadCheck (file: File, condition: CheckCondition) {
+  const { format, size } = condition
+  const isValidFormat = format ? format.includes(file.type) : true
+  const isValidSize = size ? (file.size / 1024 / 1024 < size) : true
+  let error: ErrorType = null
+  if (!isValidFormat) {
+    error = 'format'
+  }
+  if (!isValidSize) {
+    error = 'size'
+  }
+  return {
+    passed: isValidFormat && isValidSize,
+    error
+  }
+}
+
+export function createMessage (message: string, type: MessageType, timeout = 2000) {
+  const messageInstance = createApp(Message, {
+    message,
+    type
+  })
+  const mountNode = document.createElement('div')
+  document.body.appendChild(mountNode)
+  messageInstance.mount(mountNode)
+  setTimeout(() => {
+    messageInstance.unmount(mountNode)
+    document.body.removeChild(mountNode)
+  }, timeout)
 }

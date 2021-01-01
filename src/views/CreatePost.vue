@@ -1,6 +1,13 @@
 <template>
   <div class="create-post-page">
     <h4>新建博客</h4>
+    <upload
+      action="/api/upload"
+      :beforeUpload="uploadCheck"
+      :uploaded="uploadedData"
+      @file-uploaded="handleFileUploaded"
+      class="d-flex align-items-center justify-content-center bg-light text-secondary w-100 my-4"
+    />
     <validate-form @form-submit="onFormSubmit">
       <div class="mb-3">
         <label class="form-label">文章标题：</label>
@@ -34,19 +41,29 @@ import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import ValidateForm from '@/components/form/ValidateForm.vue'
 import ValidateInput from '@/components/form/ValidateInput.vue'
-import { RulesProp, GlobalDataProps, PostProps } from '@/model/DataProps'
+import Upload from '@/components/Upload.vue'
+import {
+  RulesProp,
+  GlobalDataProps,
+  PostProps,
+  ResponseType,
+  ImageProps
+} from '@/model/DataProps'
+import { beforeUploadCheck, createMessage } from '@/utils/helper'
 
 export default defineComponent({
   name: 'CreatePost',
   components: {
     ValidateForm,
-    ValidateInput
+    ValidateInput,
+    Upload
   },
   setup () {
     const router = useRouter()
     const store = useStore<GlobalDataProps>()
     const titleVal = ref('')
     const contentVal = ref('')
+    const uploadedData = ref()
     const titleRules: RulesProp = [
       { type: 'required', message: '博客标题不能为空' }
     ]
@@ -74,12 +91,29 @@ export default defineComponent({
         }
       }
     }
+    const handleFileUploaded = (rawData: ResponseType<ImageProps>) => {
+      if (rawData.data._id) {}
+    }
+    const uploadCheck = (file: File) => {
+      const result = beforeUploadCheck(file, { format: ['image/jpeg', 'image/png'], size: 1 })
+      const { passed, error } = result
+      if (error === 'format') {
+        createMessage('上传图片只能是JPG/PNG格式！', 'error')
+      }
+      if (error === 'size') {
+        createMessage('上传图片大小不能超过1Mb', 'error')
+      }
+      return passed
+    }
     return {
       titleVal,
       contentVal,
       titleRules,
       contentRules,
-      onFormSubmit
+      onFormSubmit,
+      uploadedData,
+      handleFileUploaded,
+      uploadCheck
     }
   }
 })

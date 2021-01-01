@@ -5,9 +5,11 @@ export interface UserProps {
   columnId?: number;
 }
 
-interface ImageProps {
+export interface ImageProps {
   _id?: string;
   url?: string;
+  createdAt?: string;
+  fitUrl?: string;
 }
 
 export interface ColumnProps {
@@ -40,6 +42,25 @@ interface RuleProp {
   message: string;
 }
 
+export interface ResponseType<T = {}> {
+  code: number;
+  msg: string;
+  data: T;
+}
+
+export interface CheckCondition {
+  format?: string[];
+  size?: number;
+}
+
 export type RulesProp = RuleProp[]
 
 export type TagType = 'input' | 'textarea';
+
+export type UploadStatus = 'ready' | 'loading' | 'success' | 'error';
+
+export type CheckFunction = (file: File) => boolean;
+
+export type ErrorType = 'size' | 'format' | null;
+
+export type MessageType = 'success' | 'error' | 'default';
